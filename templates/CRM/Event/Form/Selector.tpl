@@ -57,29 +57,43 @@
         {/if}
   <td class="crm-participant-contact_type">{$row.contact_type}</td>
       <td class="crm-participant-sort_name"><a href="{crmURL p='civicrm/contact/view' q="reset=1&cid=`$row.contact_id`"}" title="{ts}View contact record{/ts}">{$row.sort_name}</a></td>
+      {if !in_array("employer", $skip_columns)}
+        <td class="crmf-current_employer">{$row.employer}</td>
+      {/if}
     {/if}
 
+    {if !in_array("event_title", $skip_columns)}
     <td class="crm-participant-event_title"><a href="{crmURL p='civicrm/event/info' q="id=`$row.event_id`&reset=1"}" title="{ts}View event info page{/ts}">{$row.event_title}</a>
         {if $contactId}<br /><a href="{crmURL p='civicrm/event/search' q="reset=1&force=1&event=`$row.event_id`"}" title="{ts}List participants for this event (all statuses){/ts}">({ts}participants{/ts})</a>{/if}
     </td>
+    {/if}
+
     {assign var="participant_id" value=$row.participant_id}
     {if $lineItems.$participant_id}
+      {if !in_array("participant_fee_level", $skip_columns)}
         <td>
         {foreach from=$lineItems.$participant_id item=line name=lineItemsIter}
-      {if $line.html_type eq 'Text'}{$line.label}{else}{$line.field_title} - {$line.label}{/if}: {$line.qty}
+        {if $line.html_type eq 'Text'}{$line.label}{else}{$line.field_title} - {$line.label}{/if}: {$line.qty}
             {if ! $smarty.foreach.lineItemsIter.last}<br />{/if}
         {/foreach}
         </td>
+      {/if}
     {else}
-        <td class="crm-participant-participant_fee_level">{if !$row.paid && !$row.participant_fee_level} {ts}(no fee){/ts}{else} {$row.participant_fee_level}{/if}</td>
+      {if in_array("participant_fee_level", $skip_columns)}
+        <td class="crm-participant-participant_fee_level">AAA{if !$row.paid && !$row.participant_fee_level} {ts}(no fee){/ts}{else} {$row.participant_fee_level}{/if}</td>
+      {/if}
     {/if}
+    {if !in_array("participant_fee_amount", $skip_columns)}
     <td class="right nowrap crm-paticipant-participant_fee_amount">{$row.participant_fee_amount|crmMoney:$row.participant_fee_currency}</td>
+    {/if}
     <td class="crm-participant-participant_register_date">{$row.participant_register_date|truncate:10:''|crmDate}</td>
+    {if !in_array("event_title", $skip_columns)}
     <td class="crm-participant-event_start_date">{$row.event_start_date|truncate:10:''|crmDate}
         {if $row.event_end_date && $row.event_end_date|date_format:"%Y%m%d" NEQ $row.event_start_date|date_format:"%Y%m%d"}
             <br/>- {$row.event_end_date|truncate:10:''|crmDate}
         {/if}
    </td>
+     {/if}
     <td class="crm-participant-participant_status crm-participant_status_{$row.participant_status_id}">{$row.participant_status}</td>
     <td class="crm-participant-participant_role">{$row.participant_role_id}</td>
     <td>{$row.action|replace:'xx':$participant_id}</td>
