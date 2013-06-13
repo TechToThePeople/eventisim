@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <extension key="eu.tttp.eventisim" type="module">
   <file>eventisim</file>
-  <name>FIXME</name>
-  <description>FIXME</description>
-  <license>FIXME</license>
+  <name>Eventisim</name>
+  <description>Improves the event screens. The list of participants is optimised to increase entropy and remove redondant information. For instance, it when you list the participants of an event, it removes the event name column, as it obviously always contains the name of the event.</description>
+  <license>agpl3</license>
   <maintainer>
-    <author>FIXME</author>
-    <email>FIXME@example.com</email>
+    <author>xavier</author>
+    <email>civicrm@tttp.eu</email>
   </maintainer>
   <releaseDate>2013-06-13</releaseDate>
   <version>1.0</version>
@@ -14,7 +14,6 @@
   <compatibility>
     <ver>4.2</ver>
   </compatibility>
-  <comments>This is a new, undeveloped module</comments>
   <civix>
     <namespace>CRM/Eventisim</namespace>
   </civix>
